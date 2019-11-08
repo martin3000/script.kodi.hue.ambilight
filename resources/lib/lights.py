@@ -32,6 +32,8 @@ class Light(object):
         except KeyError:
             self.livingwhite = True
 
+        self.init_bri = None #jms
+        self.bri = None #jms
         try:
             self.init_bri = spec['state']['bri']
             self.bri = self.init_bri
