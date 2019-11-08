@@ -32,16 +32,19 @@ class Light(object):
         except KeyError:
             self.livingwhite = True
 
-        self.init_bri = None #jms
-        self.bri = None #jms
+        self.init_on = spec['state']['on']
+        self.on = self.init_on
+
+        # jms: not all lights have "bri"
+        if self.on=='true': self.init_bri=254
+        else: self.init_bri=0
+        self.bri = self.init_bri
         try:
             self.init_bri = spec['state']['bri']
             self.bri = self.init_bri
         except KeyError:
             self.livingwhite = True
 
-        self.init_on = spec['state']['on']
-        self.on = self.init_on
 
         self.session = requests.Session()
 
