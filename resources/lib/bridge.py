@@ -13,7 +13,7 @@ except ImportError:
 def user_exists(bridge_ip, bridge_user, notify=True):
     req = requests.get('http://{}/api/{}/config'.format(
         bridge_ip, bridge_user))
-    if req.startswith("404:"): return False
+    if req.startswith("404:"): return True # home assistant emulator
     
     res = req.json()
 
@@ -50,8 +50,11 @@ def create_user(bridge_ip, notify=True):
         if notify:
             import tools
             tools.notify('Kodi Hue', 'Press link button on bridge')
-        req = requests.post('http://{}/api'.format(bridge_ip), data=data)
+        req = requests.post('http://{}/api/'.format(bridge_ip), data=data)
         res = req.text
+        print("Hue Kodi:",res)
+        if res.startswith('405:'): return "12345678901234567890"    # home assistant
+        
         time.sleep(3)
 
     res = req.json()
