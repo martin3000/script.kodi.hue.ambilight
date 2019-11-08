@@ -13,7 +13,7 @@ except ImportError:
 def user_exists(bridge_ip, bridge_user, notify=True):
     req = requests.get('http://{}/api/{}/config'.format(
         bridge_ip, bridge_user))
-    if req.startswith("404:"): return True # home assistant emulator
+    if req.text.startswith("404:"): return True # home assistant emulator
     
     res = req.json()
 
