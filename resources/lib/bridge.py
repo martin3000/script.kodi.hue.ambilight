@@ -13,6 +13,8 @@ except ImportError:
 def user_exists(bridge_ip, bridge_user, notify=True):
     req = requests.get('http://{}/api/{}/config'.format(
         bridge_ip, bridge_user))
+    if req.startswith("404:"): return False
+    
     res = req.json()
 
     success = True
